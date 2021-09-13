@@ -4,9 +4,18 @@ import './index.css';
 import App from './App';
 
 
+// Import Packages
+import {Provider} from 'react-redux';
+
+// Import Component
+import store from './store/store';
+
+
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store} >
     <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
