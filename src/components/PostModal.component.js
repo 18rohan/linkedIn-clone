@@ -1,20 +1,25 @@
 import { useState, useContext } from "react";
 import styled from "styled-components/";
 
-import { MdCancel } from "react-icons/md";
+// Import Component/packages
 import { ModalContext } from "./ModalContext";
 import ReactPlayer from "react-player";
+import {useDispatch, useSelector} from 'react-redux';
+import {postArticleAPI} from '../store/actions/actions';
+import {Timestamp} from "firebase/firestore"
 
 // Import icons
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { HiDocumentText } from "react-icons/hi";
 import { BsFillBriefcaseFill, BsThreeDots } from "react-icons/bs";
+import { MdCancel } from "react-icons/md";
 import { FaYoutube } from "react-icons/fa";
 import { GiPartyPopper } from "react-icons/gi";
 import { GoGraph } from "react-icons/go";
 import { BiMessageRoundedDots } from "react-icons/bi";
 
 const PostModal = (props) => {
+  const dispatch = useDispatch();
   // Handling Modal Show/Hide State
   const modalState = useContext(ModalContext);
   // State for Handling TextArea value
@@ -23,6 +28,9 @@ const PostModal = (props) => {
   const [shareImage, setShareImage] = useState("");
   // State for Video Upload Values
   const [shareVideo, setShareVideo] = useState(false);
+
+  //Get currentUser Details from Redux store
+  const currentUser = useSelector((state)=>state.userState.user);
 
   // Handling Video show states
   const [showVideo, setShowVideo] = useState("");
@@ -42,10 +50,24 @@ const PostModal = (props) => {
     }
     setShareImage(image);
   };
+// Handle Submit
+  const postArticle = (e) =>{
+    console.log("POST MALONE!!!")
+    e.preventDefault();
+    if(e.target !== e.currentTarget) {
+      return;
+    }
+    const payload = {
+      image: shareImage,
+      video: shareVideo,
+      user:  currentUser,
+      description:  editorText,
+      timestamp:Timestamp.now(),
+    }
+    dispatch(postArticleAPI(payload));
+    ModalHandler();
 
-  // const VideoHandler = (e) =>{
-  //   const
-  // }
+  }
   return (
     <Container>
       <Content>
@@ -160,7 +182,7 @@ const PostModal = (props) => {
                 <p>Anyone</p>
               </Icon>
             </Reach>
-            <Submit>POST</Submit>
+            <Submit onClick={(event)=>postArticle(event)}>POST</Submit>
           </SubmitButtons>
         </LastRow>
       </Content>
@@ -353,6 +375,6 @@ const Submit = styled.button`
   border: 0px;
   background-color: #eeeeee;
   font-weight: bold;
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.8);
 `;
 export default PostModal;

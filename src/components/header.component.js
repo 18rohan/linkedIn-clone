@@ -1,9 +1,14 @@
+import {useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { signoutAPI } from "../store/actions/actions";
 import styled from "styled-components";
 
 const Header = () => {
   const currentUser = useSelector((state) => state.userState.user);
+  const [SignoutButton, setSignoutButton] = useState(false);
+  const HandleSignOutDropdown = (SignoutButton) =>{
+    setSignoutButton((currentStatus) => !currentStatus);
+  }
   const dispatch = useDispatch();
   return (
     <Container>
@@ -36,7 +41,7 @@ const Header = () => {
             </NavList>
 
             <NavList>
-              <a href="jobs">
+              <a href="Jobs">
                 <img src="images/nav-jobs.svg" alt="jobs" />
                 <span>Jobs</span>
               </a>
@@ -57,20 +62,23 @@ const Header = () => {
             </NavList>
 
             <NavList>
-              <a href="user">
+              <a  >
                 <User>
                   {currentUser && currentUser.photoURL ? (
                     <img src={currentUser.photoURL} alt="user" />
                   ) : (
                     <img src="images/user.svg" alt="user" />
                   )}
-                  <span>Me▼</span>
+                  <DropDown onClick={HandleSignOutDropdown}><span>Me▼</span></DropDown>
                 </User>
               </a>
-              <Signout onClick={() => dispatch(signoutAPI())}>
-                <p>Signout</p>
-              </Signout>
+
+
             </NavList>
+            {SignoutButton ? (<Signout onClick={() => dispatch(signoutAPI())}>
+              <p>Signout</p>
+            </Signout>) : '' }
+
             <NavList>
               <Work>
                 <a href="work">
@@ -146,6 +154,11 @@ const Nav = styled.nav`
     width: 100%;
   }
 `;
+const DropDown = styled.button`
+  border:none;
+  background-color:white;
+  cursor: pointer;
+`
 const NavListWrap = styled.ul`
   display: flex;
   flex-wrap: nowrap;
@@ -190,14 +203,17 @@ const NavIcons = styled.div`
   }
 `;
 const Signout = styled.button`
-  position: hidden;
-  top: 65px;
+  position:fixed;
+  top: 68px;
+  right:170px;
   border: 0px;
   padding: 15px;
-  background: white;
+  background: lightblue;
+
   p {
     font-size: 12px;
     font-weight: bold;
+
   }
   &:hover {
     color: red;

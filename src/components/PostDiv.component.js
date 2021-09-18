@@ -1,39 +1,56 @@
+import {useState} from 'react';
 import styled from "styled-components";
 import { AiFillLike, AiOutlineComment } from "react-icons/ai";
 import { FaShare, FaPaperPlane } from "react-icons/fa";
 import { BiCommentDots } from "react-icons/bi";
+import {AiOutlineLike} from "react-icons/ai";
+import {useDispatch} from 'react-redux';
 
-const Post = () => {
+const Post = (props) => {
+  const [likeStatus, setLikeStatus] = useState(false);
+  const dispatch = useDispatch();
+  const HandleLike = (likeStatus) =>{
+    setLikeStatus((currentStatus)=>!currentStatus);
+  }
   return (
     <Container>
       <FirstRow>
-        <User>
-          <img src="images/user.svg" alt="user" />
+        <User >
+          <img src={props.user_image} alt="user" />
         </User>
         <Introduction>
-          <h1>Rohan Sharma</h1>
-          <p>Student at Indian Institute of Technology, Madras</p>
-          <p>43 mins, 🌎</p>
+          <h1>{props.user}</h1>
+          <p>{props.email}</p>
+          <p>45 mins ago, 🌎</p>
         </Introduction>
       </FirstRow>
 
-      <SecondRow>
-        <img src="/images/user.svg" alt="user" />
+      <SecondRow >
+        <img src={props.post_img} alt="post" />
+        <DescRow><p>{props.post_desc}</p></DescRow>
       </SecondRow>
       <ThirdRow>
-        <Icon>
+        <SocialCounts>
+          {/* <AiOutlineLike size={22} />
+          <AiFillLike size={22} /> */}
           <img src="images/like.png" alt="like" />
           <img src="images/claps.png" alt="applause" />
-          <p>3</p>
-        </Icon>
+          <p style={{paddingLeft:"7px, fontWeight:bold"}}>3</p>
+        </SocialCounts>
         {/* <Icon>
           <img src="images/claps.png" alt="user" />
           <p>3</p>
         </Icon> */}
       </ThirdRow>
       <FourthRow>
-        <Icon>
-          <AiFillLike size={20} color="gray" />
+
+        <Icon onClick={()=>{
+          HandleLike()
+          // dispatch(likepost())
+        }}>
+          {!likeStatus ? (<AiOutlineLike size={20} color="gray" />) :
+            <AiFillLike size={20} color="blue" />}
+
           <p>Like</p>
         </Icon>
 
@@ -45,10 +62,10 @@ const Post = () => {
           <FaShare size={20} color="gray" />
           <p>share</p>
         </Icon>
-        <Icon>
+        {/* <Icon>
           <FaPaperPlane size={20} color="gray" />
           <p>Send</p>
-        </Icon>
+        </Icon> */}
       </FourthRow>
     </Container>
   );
@@ -60,35 +77,42 @@ const Container = styled.div`
 
   margin-top: 30px;
   border-radius: 10px;
-  padding: 10px;
+  padding-top: 10px;
+  padding-bottom:10px;
 `;
 const FirstRow = styled.div`
   display: flex;
   flex-direction: row;
+  padding-left:10px;
+  padding-bottom: 10px;
+  padding-top:10px;
 `;
 const User = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 45px;
-  height: 45px;
+  max-width: 40px;
+  max-height: 40px;
   padding-right: 0px;
 
   img {
+    max-width: 30px;
+    max-height: 30px;
     border-radius: 50%;
   }
 `;
 
 const SecondRow = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
   max-width: 100%;
   max-height: auto;
   img {
-    max-width: 50%;
+    max-width: 100%;
     max-height: 400px;
   }
 `;
@@ -96,10 +120,16 @@ const SecondRow = styled.div`
 const ThirdRow = styled.div`
   display: flex;
   flex-direction: row;
+  padding-top:10px;
+  padding-bottom:5px;
+  padding-left: 10px;
 `;
 const FourthRow = styled.div`
   display: flex;
   flex-direction: row;
+
+  padding-bottom:15px;
+  padding-left: 5px;
 `;
 const Introduction = styled.div`
   margin-left: 12px;
@@ -120,6 +150,8 @@ const Introduction = styled.div`
     font-size: 14px;
   }
 `;
+
+
 const Icon = styled.button`
   display: flex;
   flex-direction: row;
@@ -131,6 +163,7 @@ const Icon = styled.button`
   margin-top: 10px;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   p {
     font-size: 14px;
@@ -144,5 +177,32 @@ const Icon = styled.button`
     border-radius: 20px;
   }
 `;
+const SocialCounts = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width:30px;
+    height:30px;
+
+  }
+
+`;
+
+const DescRow = styled.div`
+  display:flex;
+  flex-wrap: wrap;
+  flex-direction:  column;
+  justify-content: center;
+  align-items: flex-start;
+  width:100%;
+  padding-left:10px;
+  padding-top:15px;
+  p {
+    font-size:14px;
+  }
+`
 
 export default Post;
