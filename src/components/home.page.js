@@ -14,9 +14,7 @@ const Login = (props) => {
       {!currentUser && <Redirect to="/" />}
       {/*Top "Hiring in a hurry" banner*/}
       <Section>
-        <h5>
-          <a>Hiring in a Hurry: </a>
-        </h5>
+        <h5>Hiring in a Hurry:</h5>
         <p>
           Find talented pros in record time with UpWork and keep business
           moving.
@@ -36,7 +34,7 @@ const Login = (props) => {
 
 const Container = styled.div`
   padding-top: 52px;
-  padding-left: 70px;
+  padding-left: 20px;
   padding-right: 70px;
   max-width: 100%;
   background-color: #eeeeee;
@@ -47,11 +45,7 @@ const Container = styled.div`
     padding-right: 10px;
   }
 `;
-const Content = styled.div`
-  max-width: 1128px;
-  margin-left: auto;
-  margin-right: auto;
-`;
+
 const Section = styled.section`
   min-height: 50px;
   width: 10 0%;
@@ -60,6 +54,7 @@ const Section = styled.section`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
   h5 {
     color: blue;
     text-decoration: underline;

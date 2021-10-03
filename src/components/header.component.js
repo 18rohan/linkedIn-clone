@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { signoutAPI } from "../store/actions/actions";
 import styled from "styled-components";
@@ -6,9 +6,9 @@ import styled from "styled-components";
 const Header = () => {
   const currentUser = useSelector((state) => state.userState.user);
   const [SignoutButton, setSignoutButton] = useState(false);
-  const HandleSignOutDropdown = (SignoutButton) =>{
+  const HandleSignOutDropdown = (SignoutButton) => {
     setSignoutButton((currentStatus) => !currentStatus);
-  }
+  };
   const dispatch = useDispatch();
   return (
     <Container>
@@ -23,7 +23,10 @@ const Header = () => {
           <SearchIcon>
             <img src="images/search-icon.svg" alt="linkedIn Search" />
           </SearchIcon>
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search for Jobs, People, Companies..."
+          />
         </Search>
         <Nav>
           <NavListWrap>
@@ -62,22 +65,27 @@ const Header = () => {
             </NavList>
 
             <NavList>
-              <a  >
+              {/* eslint-disable  */}
+              <a href="">
                 <User>
                   {currentUser && currentUser.photoURL ? (
                     <img src={currentUser.photoURL} alt="user" />
                   ) : (
                     <img src="images/user.svg" alt="user" />
                   )}
-                  <DropDown onClick={HandleSignOutDropdown}><span>Me▼</span></DropDown>
+                  <DropDown onClick={HandleSignOutDropdown}>
+                    <span>Me▼</span>
+                  </DropDown>
                 </User>
               </a>
-
-
             </NavList>
-            {SignoutButton ? (<Signout onClick={() => dispatch(signoutAPI())}>
-              <p>Signout</p>
-            </Signout>) : '' }
+            {SignoutButton ? (
+              <Signout onClick={() => dispatch(signoutAPI())}>
+                <p>Signout</p>
+              </Signout>
+            ) : (
+              ""
+            )}
 
             <NavList>
               <Work>
@@ -155,10 +163,10 @@ const Nav = styled.nav`
   }
 `;
 const DropDown = styled.button`
-  border:none;
-  background-color:white;
+  border: none;
+  background-color: white;
   cursor: pointer;
-`
+`;
 const NavListWrap = styled.ul`
   display: flex;
   flex-wrap: nowrap;
@@ -190,22 +198,10 @@ const NavList = styled.li`
   }
 `;
 
-const NavIcons = styled.div`
-  margin-left: 100px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  img {
-    margin-left: 20px;
-    margin-right: 20px;
-    width: 20px;
-  }
-`;
 const Signout = styled.button`
-  position:fixed;
+  position: fixed;
   top: 68px;
-  right:170px;
+  right: 170px;
   border: 0px;
   padding: 15px;
   background: lightblue;
@@ -213,7 +209,6 @@ const Signout = styled.button`
   p {
     font-size: 12px;
     font-weight: bold;
-
   }
   &:hover {
     color: red;
@@ -250,51 +245,6 @@ const Work = styled(User)`
   padding-left: 15px;
   @media (max-width: 768px) {
     display: none;
-  }
-`;
-
-const Icon = styled.button`
-  display: flex;
-  flex-direction: column;
-  background-color: transparent;
-  border: 0px;
-  justify-content: center;
-  align-items: center;
-
-  p {
-    font-size: 12px;
-    color: rgba(0, 0, 0, 0.6);
-  }
-  img {
-    width: 25px;
-    height: 25px;
-    border-radius: 20px;
-  }
-`;
-const NavButton = styled.a`
-  font-size: 16px;
-  padding: 10px 12px;
-  color: rgba(0, 0, 0, 0.6);
-  margin-right: 12px;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.08);
-    color: rgba(0, 0, 0, 0.9);
-    border-radius: 4px;
-  }
-`;
-const Signin = styled.a`
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 40px;
-  padding: 10px 24px;
-  background-color: rgba(0, 0, 0, 0);
-  box-shadow: inset 0 0 0 1px #0a66c2;
-  border-radius: 24px;
-  transition-duration: 167ms;
-  &:hover {
-    background-color: rgba(112, 181, 249, 0.15);
-    color: #0a66c2;
   }
 `;
 

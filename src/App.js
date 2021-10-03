@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffects } from "react";
+import React from "react";
 
 // Import Components
 import Login from "./components/login.page";

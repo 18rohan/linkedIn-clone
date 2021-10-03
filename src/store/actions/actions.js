@@ -1,6 +1,14 @@
-import { db, auth, storage, provider } from "../../firebase/firebase";
+import { db, auth, provider } from "../../firebase/firebase";
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { doc, setDoc,getDocs, addDoc, collection, Timestamp } from "firebase/firestore";
+import {
+  getDocs,
+  addDoc,
+  collection,
+  setDoc,
+  doc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
 import {
   getStorage,
   ref,
@@ -8,26 +16,35 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 
-import { SET_USER,SET_LOADING_STATE,GET_ARTICLES, LIKE_A_POST } from "./actionTypes";
+import {
+  SET_USER,
+  SET_LOADING_STATE,
+  GET_ARTICLES,
+  LIKE_A_POST,
+  SET_LIKES,
+} from "./actionTypes";
 
 export const setUser = (payload) => ({
   type: SET_USER,
   user: payload,
 });
-
-export const setLoading = (status) =>({
-  type:SET_LOADING_STATE,
-  loading:status,
+export const setLikes = (payload) => ({
+  type: SET_LIKES,
+  likes: payload,
+});
+export const setLoading = (status) => ({
+  type: SET_LOADING_STATE,
+  loading: status,
 });
 
-export const getArticles = (payload) =>({
-  type:GET_ARTICLES,
-  payload:payload
+export const getArticles = (payload) => ({
+  type: GET_ARTICLES,
+  payload: payload,
 });
 
-export const likePost = (payload) =>({
-  type:LIKE_A_POST,
-  payload:payload
+export const likePost = (payload) => ({
+  type: LIKE_A_POST,
+  payload: payload,
 });
 export function signInAPI() {
   return (dispatch) => {
@@ -85,21 +102,25 @@ export const signoutAPI = (payload) => {
   };
 };
 
-export const getArticlesAPI = (payload) =>{
-  return async (dispatch) =>{
-
+export const getArticlesAPI = (payload) => {
+  return async (dispatch) => {
     const querySnapshot = await getDocs(collection(db, "articles"));
     let docs = [];
+
     querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    docs.push(doc.data());
+      // doc.data() is never undefined for query doc snapshots
 
-  });
-  dispatch(getArticles(docs));
-  console.log("ARTICLES ACTION : ",docs);
-  }
-}
-
+      // console.log(doc.id, " => ", doc.data());
+      var item = {
+        id: doc.id,
+        post: doc.data(),
+      };
+      docs.push(item);
+    });
+    dispatch(getArticles(docs));
+    console.log("ARTICLES ACTION : ", docs);
+  };
+};
 
 export const postArticleAPI = (payload) => {
   // Create a root reference
@@ -125,6 +146,8 @@ export const postArticleAPI = (payload) => {
           case "running":
             console.log("Upload is running");
             break;
+          default:
+            return;
         }
       },
       (error) => {
@@ -142,13 +165,27 @@ export const postArticleAPI = (payload) => {
             date: payload.timestamp,
             image: payload.user.photoURL,
           },
+          comments: [],
+          likes: [],
           video: payload.video,
           sharedImg: downloadURL,
-          comments: 0,
           description: payload.description,
         });
         dispatch(setLoading(false));
       }
     );
+  };
+};
+
+export const LikePost = (payload) => {
+  // const post = payload.post;
+  const id = payload.post_id;
+  const user_id = payload.user_id;
+  return async (dispatch) => {
+    const PostDoc = doc(db, "articles", id);
+
+    await updateDoc(PostDoc, {
+      likes: arrayUnion(user_id),
+    });
   };
 };

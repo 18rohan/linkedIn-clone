@@ -1,24 +1,33 @@
-import {SET_LOADING_STATE, GET_ARTICLES, LIKE_A_POST} from '../actions/actionTypes';
+import {
+  SET_LOADING_STATE,
+  GET_ARTICLES,
+  SET_LIKES,
+} from "../actions/actionTypes";
 
 export const initial_state = {
-  articles:[],
-  loading:false
-}
+  articles: [],
+  loading: false,
+  likes: [],
+};
 
-export const ArticleReducer = (state=initial_state, action) =>{
-  switch(action.type){
+export const ArticleReducer = (state = initial_state, action) => {
+  switch (action.type) {
     case GET_ARTICLES:
       return {
         ...state,
-        articles:action.payload
-      }
-    
+        articles: action.payload,
+      };
+    case SET_LIKES:
+      return {
+        ...state,
+        likes: action.likes,
+      };
     case SET_LOADING_STATE:
       return {
         ...state,
-        loading:action.status
-      }
+        loading: action.status,
+      };
     default:
       return state;
   }
-}
+};

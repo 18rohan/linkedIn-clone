@@ -12,5 +12,8 @@ const RightSide = () => {
 };
 const Container = styled.div`
   grid-area: rightside;
+  position: fixed;
+  width: 20%;
+  right: 200px;
 `;
 export default RightSide;

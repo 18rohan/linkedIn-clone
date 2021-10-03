@@ -173,26 +173,7 @@ const Connection = styled.div`
     color: rgba(0, 0, 0);
   }
 `;
-const WhoViewed = styled.div`
-  display: flex;
 
-  flex-direction: row;
-  justify-content: space-between;
-  padding-top: 1px;
-  padding-bottom: 15px;
-  & div {
-    padding-left: 6px;
-  }
-  p {
-    font-size: 13px;
-    font-weight: bold;
-    color: rgba(0, 0, 0, 0.5);
-  }
-  h2 {
-    font-size: 12px;
-    color: blue;
-  }
-`;
 const ConnectionsNo = styled.div`
   display: flex;
   flex-direction: row;
@@ -209,18 +190,6 @@ const ConnectionsNo = styled.div`
     color: blue;
     font-size: 12px;
   }
-`;
-const TopBar = styled.div`
-  width: 100%;
-  height: 70px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  background: linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 0.4) 35%,
-    rgba(0, 0, 0, 0.57) 100%
-  );
 `;
 
 const User = styled.div`
