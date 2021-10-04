@@ -1,23 +1,20 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+
 import styled from "styled-components";
 import { AiFillLike } from "react-icons/ai";
 import { FaShare } from "react-icons/fa";
 import { BiCommentDots } from "react-icons/bi";
 import { AiOutlineLike } from "react-icons/ai";
-import { LikePost, setLikes } from "../store/actions/actions.js";
+import { LikePost, setLikes, UnlikePost } from "../store/actions/actions.js";
 import { useDispatch, useSelector } from "react-redux";
 
 const Post = (props) => {
   const dispatch = useDispatch();
-  const [likeStatus, setLikeStatus] = useState(false);
+  const [likeStatus, setLikeStatus] = useState(props.liked);
   const likesNumber = useSelector((state) => state.articleState.likes);
   const [commentsDropdown, setCommentsDropdown] = useState(false);
   const HandleComments = (commentsDropdown) => {
     setCommentsDropdown((currentStatus) => !currentStatus);
-  };
-  const HandleLike = (likeStatus) => {
-    setLikeStatus((currentStatus) => !currentStatus);
   };
 
   // Number of likes
@@ -25,6 +22,28 @@ const Post = (props) => {
   var likes = props.likesNumber;
   likes.map((like) => post_likes.push(like));
   // dispatch(setLikes(post_likes));
+  const [postLikes, setPostLikes] = useState(post_likes.length);
+  const HandleUnlike = (likeStatus, postLikes) => {
+    setPostLikes((currentLikes) => currentLikes - 1);
+    dispatch(
+      UnlikePost({
+        user_id: props.currentUser.uid,
+        post: props.post,
+        post_id: props.post_id,
+      })
+    );
+  };
+  const HandleLike = (likeStatus, postLikes) => {
+    setPostLikes((currentLikes) => currentLikes + 1);
+    dispatch(
+      LikePost({
+        user_id: props.currentUser.uid,
+        post: props.post,
+        post_id: props.post_id,
+      })
+    );
+  };
+
   return (
     <Container>
       <FirstRow>
@@ -50,9 +69,7 @@ const Post = (props) => {
           <AiFillLike size={22} /> */}
           <img src="images/like.png" alt="like" />
           <img src="images/claps.png" alt="applause" />
-          <p style={{ paddingLeft: "7px, fontWeight:bold" }}>
-            {post_likes.length}
-          </p>
+          <p style={{ paddingLeft: "7px, fontWeight:bold" }}>{postLikes}</p>
         </SocialCounts>
         {/* <Icon>
           <img src="images/claps.png" alt="user" />
@@ -62,20 +79,18 @@ const Post = (props) => {
       <FourthRow>
         <Icon
           onClick={() => {
-            HandleLike();
-            dispatch(
-              LikePost({
-                user_id: props.currentUser.uid,
-                post: props.post,
-                post_id: props.post_id,
-              })
-            );
+            setLikeStatus((currentStatus) => !currentStatus);
+            if (!likeStatus) {
+              HandleLike();
+            } else if (likeStatus) {
+              HandleUnlike();
+            }
           }}
         >
-          {!likeStatus ? (
-            <AiOutlineLike size={20} color="gray" />
-          ) : (
+          {likeStatus && props.liked === true ? (
             <AiFillLike size={20} color="blue" />
+          ) : (
+            <AiOutlineLike size={20} color="gray" />
           )}
 
           <p>Like</p>

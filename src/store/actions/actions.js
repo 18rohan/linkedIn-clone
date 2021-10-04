@@ -8,6 +8,7 @@ import {
   doc,
   updateDoc,
   arrayUnion,
+  arrayRemove,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -22,6 +23,7 @@ import {
   GET_ARTICLES,
   LIKE_A_POST,
   SET_LIKES,
+  UNLIKE_POST,
 } from "./actionTypes";
 
 export const setUser = (payload) => ({
@@ -44,6 +46,10 @@ export const getArticles = (payload) => ({
 
 export const likePost = (payload) => ({
   type: LIKE_A_POST,
+  payload: payload,
+});
+export const UnlikeAPost = (payload) => ({
+  type: UNLIKE_POST,
   payload: payload,
 });
 export function signInAPI() {
@@ -186,6 +192,18 @@ export const LikePost = (payload) => {
 
     await updateDoc(PostDoc, {
       likes: arrayUnion(user_id),
+    });
+    dispatch(likePost({ user_id: user_id }));
+  };
+};
+
+export const UnlikePost = (payload) => {
+  const id = payload.post_id;
+  const user_id = payload.user_id;
+  return async (dispatch) => {
+    const PostDoc = doc(db, "articles", id);
+    await updateDoc(PostDoc, {
+      likes: arrayRemove(user_id),
     });
   };
 };

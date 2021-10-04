@@ -81,6 +81,7 @@ const Card = styled.div`
   margin-top: 1px;
   margin-bottom: 1px;
   padding: 12px;
+
   @media (max-width: 768px) {
     display: none;
   }

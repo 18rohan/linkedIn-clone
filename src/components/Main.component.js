@@ -29,20 +29,42 @@ const Main = (props) => {
         <PostDiv />
         {modal ? <PostModal /> : " "}
 
-        {articles.map((article, key) => (
-          <Post
-            key={key}
-            post={article.post}
-            likesNumber={article.post.likes}
-            post_id={article.id}
-            currentUser={currentUser}
-            user={article.post.actor.title}
-            post_desc={article.description}
-            user_image={article.post.actor.image}
-            post_img={article.post.sharedImg}
-            email={article.post.actor.description}
-          />
-        ))}
+        {articles.map((article, key) => {
+          console.log("MAIN COMPONENT: ", article);
+          if (article.post.likes.includes(currentUser.uid)) {
+            return (
+              <Post
+                key={key}
+                liked={true}
+                post={article.post}
+                likesNumber={article.post.likes}
+                post_id={article.id}
+                currentUser={currentUser}
+                user={article.post.actor.title}
+                post_desc={article.description}
+                user_image={article.post.actor.image}
+                post_img={article.post.sharedImg}
+                email={article.post.actor.description}
+              />
+            );
+          } else {
+            return (
+              <Post
+                key={key}
+                liked={false}
+                post={article.post}
+                likesNumber={article.post.likes}
+                post_id={article.id}
+                currentUser={currentUser}
+                user={article.post.actor.title}
+                post_desc={article.description}
+                user_image={article.post.actor.image}
+                post_img={article.post.sharedImg}
+                email={article.post.actor.description}
+              />
+            );
+          }
+        })}
       </Container>
     </ModalContext.Provider>
   );
