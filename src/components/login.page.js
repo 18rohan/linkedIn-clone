@@ -34,7 +34,9 @@ const Login = (props) => {
           <h1>Welcome to your professional community</h1>
           <VerticalContainer>
             <Action>
-              <a href="/">Search a Job</a>
+              <div>
+                <a href="/">Search a Job</a>
+              </div>
             </Action>
             <Action>
               <a href="#search">Find a Person you know</a>
@@ -161,7 +163,10 @@ const VerticalContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const Action = styled.a`
+const Action = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin: 12px 0px 0px 10px;
   background: transparent;
   width: 30%;
@@ -173,6 +178,9 @@ const Action = styled.a`
     text-decoration: none;
     color: black;
     font-weight: 400;
+  }
+  p {
+    font-size: 80px;
   }
   @media (max-width: 768px) {
     width: 80%;

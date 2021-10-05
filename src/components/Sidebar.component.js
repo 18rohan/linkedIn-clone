@@ -114,9 +114,9 @@ const NameSection = styled.div`
   align-items: center;
   background-color: white;
   background-image: url("images/card-bg.svg");
-  background-size: contain;
+  background-size: cover;
 
-  background-size: 220px 50px;
+  background-size: 280px 50px;
   background-repeat: no-repeat;
   height: 120px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.3);
