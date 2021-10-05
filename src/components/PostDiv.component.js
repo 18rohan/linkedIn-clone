@@ -16,7 +16,10 @@ const Post = (props) => {
   const HandleComments = (commentsDropdown) => {
     setCommentsDropdown((currentStatus) => !currentStatus);
   };
-
+  const ToggleLike = (likeStatus, like) => {
+    setLikeStatus((likeStatus) => !likeStatus);
+    console.log("LIKE STATUS: ", likeStatus);
+  };
   // Number of likes
   const post_likes = [];
   var likes = props.likesNumber;
@@ -25,6 +28,7 @@ const Post = (props) => {
   const [postLikes, setPostLikes] = useState(post_likes.length);
   const HandleUnlike = (likeStatus, postLikes) => {
     setPostLikes((currentLikes) => currentLikes - 1);
+
     dispatch(
       UnlikePost({
         user_id: props.currentUser.uid,
@@ -79,7 +83,8 @@ const Post = (props) => {
       <FourthRow>
         <Icon
           onClick={() => {
-            setLikeStatus((currentStatus) => !currentStatus);
+            // setLikeStatus((currentStatus) => !currentStatus);
+            ToggleLike(likeStatus);
             if (!likeStatus) {
               HandleLike();
             } else if (likeStatus) {
@@ -87,7 +92,7 @@ const Post = (props) => {
             }
           }}
         >
-          {likeStatus && props.liked === true ? (
+          {likeStatus ? (
             <AiFillLike size={20} color="blue" />
           ) : (
             <AiOutlineLike size={20} color="gray" />

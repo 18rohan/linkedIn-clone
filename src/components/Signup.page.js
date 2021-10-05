@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 // Redux packages
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { signInAPI } from "../store/actions/actions";
 import { Redirect } from "react-router";
 import { FcGoogle } from "react-icons/fc";
+import SigninCard from "./SigninCard.component.js";
 
-const Login = (props) => {
+const SignupPage = (props) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.userState.user);
 
@@ -21,44 +21,21 @@ const Login = (props) => {
         </a>
         <div>
           <Join>Join Now</Join>
-
-          <Signin>
-            <Link to="/signin" style={{ textDecoration: "none" }}>
-              Sign In
-            </Link>
-          </Signin>
+          <Signin>Sign In</Signin>
         </div>
       </Nav>
       <Section>
-        <Hero>
-          <h1>Welcome to your professional community</h1>
-          <VerticalContainer>
-            <Action>
-              <a href="/">Search a Job</a>
-            </Action>
-            <Action>
-              <a href="#search">Find a Person you know</a>
-            </Action>
-            <Action>
-              <a href="#skills">Learn a new skill</a>
-            </Action>
-            <Form>
-              <Button onClick={() => dispatch(signInAPI())}>
-                {/*<img src="images/google.svg" alt="google"/>*/}
-                <FcGoogle size={25} />
-                <p>Google</p>
-              </Button>
-            </Form>
-            <img src="images/login-hero.svg" alt="illustration" />
-          </VerticalContainer>
-        </Hero>
+        <SigninCard />
       </Section>
     </Container>
   );
 };
 
 const Container = styled.div`
-  padding: 20px 0px 20px 20px;
+  ${"" /* padding: 20px 0px 20px 20px; */}
+  width:100%;
+  heigth: 100vh;
+  background-color: #ffffff;
 `;
 
 const Nav = styled.nav`
@@ -108,16 +85,11 @@ const Signin = styled.a`
 
 const Section = styled.section`
   display: flex;
-  align-content: start;
-  min-height: 700px;
-  padding-bottom: 138px;
-  padding-top: 40px;
-  padding: 60px 0;
-  position: relative;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 1128px;
+  justify-content: center;
   align-items: center;
+
+  width: 100%;
+
   margin:auto @media(max-width:768px) {
     margin: auto;
     min-height: 0px;
@@ -222,4 +194,4 @@ const Button = styled.button`
     margin-left: 40px;
   }
 `;
-export default Login;
+export default SignupPage;

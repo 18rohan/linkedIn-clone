@@ -1,6 +1,20 @@
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 const Sidebar = () => {
+  const [scroller, setScroll] = useState("");
+  const listenScrollEvent = (event) => {
+    if (window.scrollY < 400) {
+      return setScroll("");
+    } else if (window.scrollY > 370) {
+      return setScroll("fixed");
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", listenScrollEvent);
+
+    return () => window.removeEventListener("scroll", listenScrollEvent);
+  }, []);
   const currentUser = useSelector((state) => state.userState.user);
   return (
     <Card>
@@ -46,7 +60,7 @@ const Sidebar = () => {
         </div>
       </PremiumTool>
 
-      <CommunityCard>
+      <CommunityCard position={scroller}>
         <div>
           <h1>Recent</h1>
         </div>
@@ -77,7 +91,7 @@ const Card = styled.div`
   padding-bottom: 40px;
   align-items: center;
   border-radius: 50px;
-  width: 80%;
+  width: 320px;
   margin-top: 1px;
   margin-bottom: 1px;
   padding: 12px;
@@ -217,10 +231,11 @@ const CommunityCard = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 10px;
-
+  margin-top: 20px;
+  top: 50px;
+  position: ${(props) => props.position};
   border-radius: 10px;
-  width: 100%;
+  width: 250px;
   background-color: #fff;
 
   div {
@@ -228,7 +243,7 @@ const CommunityCard = styled.div`
     flex-direction: row;
     justify-content: space-between;
     width: 90%;
-    padding-top: 15px;
+    padding-top: 45px;
     padding: 5px;
   }
   & div > p {

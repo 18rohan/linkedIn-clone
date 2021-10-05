@@ -27,11 +27,19 @@ const Main = (props) => {
     <ModalContext.Provider value={{ modal, setModal }}>
       <Container>
         <PostDiv />
-        {modal ? <PostModal /> : " "}
+        {modal ? (
+          <PostModal
+            name={currentUser.displayName}
+            user_image={currentUser.photoURL}
+          />
+        ) : (
+          " "
+        )}
 
         {articles.map((article, key) => {
           console.log("MAIN COMPONENT: ", article);
-          if (article.post.likes.includes(currentUser.uid)) {
+
+          if (currentUser && article.post.likes.includes(currentUser.uid)) {
             return (
               <Post
                 key={key}
@@ -41,7 +49,7 @@ const Main = (props) => {
                 post_id={article.id}
                 currentUser={currentUser}
                 user={article.post.actor.title}
-                post_desc={article.description}
+                post_desc={article.post.description}
                 user_image={article.post.actor.image}
                 post_img={article.post.sharedImg}
                 email={article.post.actor.description}
@@ -57,7 +65,7 @@ const Main = (props) => {
                 post_id={article.id}
                 currentUser={currentUser}
                 user={article.post.actor.title}
-                post_desc={article.description}
+                post_desc={article.post.description}
                 user_image={article.post.actor.image}
                 post_img={article.post.sharedImg}
                 email={article.post.actor.description}

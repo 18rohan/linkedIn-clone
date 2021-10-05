@@ -11,7 +11,7 @@ const Login = (props) => {
 
   return (
     <Container>
-      {!currentUser && <Redirect to="/" />}
+      {currentUser === null && <Redirect to="/signin" />}
       {/*Top "Hiring in a hurry" banner*/}
       <Section>
         <h5>Hiring in a Hurry:</h5>
@@ -79,7 +79,7 @@ const Layout = styled.div`
   column-gap: 15px;
   row-gap: 15px;
   grid-template-row: auto;
-  margin: 25px 0;
+  ${"" /* margin: 25px 0; */}
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;

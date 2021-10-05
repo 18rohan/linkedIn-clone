@@ -1,33 +1,32 @@
-
-
 body {
   overflow-y: scroll;
   overflow-x: hidden;
 }
 
-:root, 
+:root,
 body {
   font-family: Arial, sans-serif;
-  background-color: #EEEEEE;
-  },
+  background-color: #eeeeee;
+}
+,
 html {
-  background-color: #EEEEEE;
+  background-color: #eeeeee;
   box-sizing: border-box;
 }
 @media-keyframes fadeIn {
   from {
-    opacity:0;
+    opacity: 0;
   }
   to {
-    opacity:1;
+    opacity: 1;
   }
 }
 @keyframes fadeIn {
   from {
-  opacity:0;
+    opacity: 0;
   }
   to {
-    opacity:1;
+    opacity: 1;
   }
 }
 div,

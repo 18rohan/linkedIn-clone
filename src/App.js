@@ -4,6 +4,7 @@ import React from "react";
 // Import Components
 import Login from "./components/login.page";
 import Home from "./components/home.page";
+import SignupPage from "./components/Signup.page.js";
 import Header from "./components/header.component";
 
 // Import Packages
@@ -23,6 +24,9 @@ function App() {
           <Route exact path="/home">
             <Header />
             <Home />
+          </Route>
+          <Route exact path="/signin">
+            <Login />
           </Route>
         </Switch>
       </Router>

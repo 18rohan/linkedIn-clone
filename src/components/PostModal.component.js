@@ -4,9 +4,9 @@ import styled from "styled-components/";
 // Import Component/packages
 import { ModalContext } from "./ModalContext";
 import ReactPlayer from "react-player";
-import {useDispatch, useSelector} from 'react-redux';
-import {postArticleAPI} from '../store/actions/actions';
-import {Timestamp} from "firebase/firestore"
+import { useDispatch, useSelector } from "react-redux";
+import { postArticleAPI } from "../store/actions/actions";
+import { Timestamp } from "firebase/firestore";
 
 // Import icons
 import { HiOutlinePhotograph } from "react-icons/hi";
@@ -30,7 +30,7 @@ const PostModal = (props) => {
   const [shareVideo, setShareVideo] = useState(false);
 
   //Get currentUser Details from Redux store
-  const currentUser = useSelector((state)=>state.userState.user);
+  const currentUser = useSelector((state) => state.userState.user);
 
   // Handling Video show states
   const [showVideo, setShowVideo] = useState("");
@@ -50,24 +50,23 @@ const PostModal = (props) => {
     }
     setShareImage(image);
   };
-// Handle Submit
-  const postArticle = (e) =>{
-    console.log("POST MALONE!!!")
+  // Handle Submit
+  const postArticle = (e) => {
+    console.log("POST MALONE!!!");
     e.preventDefault();
-    if(e.target !== e.currentTarget) {
+    if (e.target !== e.currentTarget) {
       return;
     }
     const payload = {
       image: shareImage,
       video: shareVideo,
-      user:  currentUser,
-      description:  editorText,
-      timestamp:Timestamp.now(),
-    }
+      user: currentUser,
+      description: editorText,
+      timestamp: Timestamp.now(),
+    };
     dispatch(postArticleAPI(payload));
     ModalHandler();
-
-  }
+  };
   return (
     <Container>
       <Content>
@@ -81,8 +80,13 @@ const PostModal = (props) => {
         </Header>
         <SharedContent>
           <UserInfo>
-            <img src="images/user.svg" alt="user" />
-            <span>Name</span>
+            {props.user_image ? (
+              <img src={props.user_image} alt="user" />
+            ) : (
+              <img src="images/user.svg" alt="user" />
+            )}
+
+            <span>{props.name}</span>
           </UserInfo>
         </SharedContent>
 
@@ -182,7 +186,7 @@ const PostModal = (props) => {
                 <p>Anyone</p>
               </Icon>
             </Reach>
-            <Submit onClick={(event)=>postArticle(event)}>POST</Submit>
+            <Submit onClick={(event) => postArticle(event)}>POST</Submit>
           </SubmitButtons>
         </LastRow>
       </Content>
@@ -325,8 +329,8 @@ const UserInfo = styled.div`
   padding: 12px 24px;
   svg,
   img {
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     background-clip: content-box;
     border: 2px solid transparent;
     border-radius: 50%;

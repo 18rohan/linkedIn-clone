@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { signoutAPI } from "../store/actions/actions";
+import { signoutAPI, setArticles } from "../store/actions/actions";
 import styled from "styled-components";
-
+import { Link } from "react-router-dom";
 const Header = () => {
   const currentUser = useSelector((state) => state.userState.user);
 
@@ -107,9 +107,15 @@ const Header = () => {
                           <li>Job Posting Account</li>
                         </ul>
                       </Account>
-                      <SignoutButton onClick={() => dispatch(signoutAPI())}>
-                        <h3>Signout</h3>
-                      </SignoutButton>
+                      <Link to="/" style={{ border: "0px" }}>
+                        <SignoutButton
+                          onClick={() => {
+                            dispatch(signoutAPI());
+                          }}
+                        >
+                          <h3>Signout</h3>
+                        </SignoutButton>
+                      </Link>
                     </Signout>
                   </DropDown>
                 </User>
@@ -132,7 +138,7 @@ const Header = () => {
 };
 
 const Container = styled.div`
-  background-color: white;
+  background-color: #ffffff;
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   left: 0;
   padding: 10px 24px;

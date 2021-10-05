@@ -24,6 +24,7 @@ import {
   LIKE_A_POST,
   SET_LIKES,
   UNLIKE_POST,
+  LOGOUT_USER,
 } from "./actionTypes";
 
 export const setUser = (payload) => ({
@@ -43,10 +44,17 @@ export const getArticles = (payload) => ({
   type: GET_ARTICLES,
   payload: payload,
 });
-
+export const setArticles = (payload) => ({
+  type: GET_ARTICLES,
+  payload: null,
+});
 export const likePost = (payload) => ({
   type: LIKE_A_POST,
   payload: payload,
+});
+export const Logout = (payload) => ({
+  type: LOGOUT_USER,
+  payload: null,
 });
 export const UnlikeAPost = (payload) => ({
   type: UNLIKE_POST,
